@@ -15,7 +15,7 @@ class MessageList extends React.Component{
     return(
         <Container fixed> 
             <Grid container className={classes.root}>
-                 
+                 <h1> Message List</h1>
              </Grid>
                
         </Container>
