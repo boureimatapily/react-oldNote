@@ -6,7 +6,7 @@ import { Switch, Route } from "react-router-dom";
 import NavBar from "./Components/NavBar";
 
 
-import { fetchUser } from "./redux/Actions/authActions"
+// import { fetchUser } from "./redux/Actions/authActions"
 // import { connect } from "react-redux";
 // import AppRoute from "./util/AppRoute";
 import { ToastContainer } from "react-toastify"
@@ -16,9 +16,7 @@ import Chat from "./Pages/Chat";
 
 
 function App({ fetchUser }){
-  useLayoutEffect(() => {
-    fetchUser()
-  }, [])
+  
 
 // // Management authentification user first loading
 // componentDidMount() {
@@ -63,5 +61,5 @@ function App({ fetchUser }){
 
 export default connect(
   null,
-  { fetchUser }
+  
 )(App)
