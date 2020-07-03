@@ -1,4 +1,4 @@
-import React from 'react';
+import React,  { useLayoutEffect, useState } from 'react';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -17,8 +17,10 @@ import Button from "@material-ui/core/Button";
 //import { Link } from '@material-ui/core';
 import { Link } from "react-router-dom";
 import { Grid, Container } from '@material-ui/core';
-import {logoutUser} from "../redux/Actions/authActions"
+import {logout} from "../redux/Actions/authActions"
 import { connect } from 'react-redux';
+import { getAuthenticationStatus } from '../Config/fbconfig';
+import {toast} from "react-toastify"
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -95,8 +97,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
- function NavBar(logoutUser) {
+ function NavBar(logout) {
   const classes = useStyles();
+
+  const [isAuthenticated, setIsAuthenticated] = useState(null)
+
+  useLayoutEffect(() => {
+    setIsAuthenticated(getAuthenticationStatus())
+  })
+
+  const handleLogout = event => {
+    event.preventDefault()
+    logout()
+    toast.success("Logout successful")
+  }
+
   // const [spacing, setSpacing] = React.useState(2);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -152,10 +167,7 @@ const useStyles = makeStyles((theme) => ({
             {" "}
             <Button variant="contained" color="primary" className={classes.navButton}>Home</Button>{" "}
           </Link>
-          <Link to="/courses">
-            {" "}
-            <Button variant="contained" color="primary" className={classes.navButton}>Browse Courses</Button>{" "}
-          </Link>
+         
           <Link to="/login">
             {" "}
             <Button variant="contained" color="primary" className={classes.navButton}>Login</Button>{" "}
@@ -189,7 +201,7 @@ const useStyles = makeStyles((theme) => ({
         <Toolbar>
         
           <Typography className={classes.title} variant="h6" noWrap>
-            Learn Forward
+            Pusher Chat App
           </Typography>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
@@ -211,25 +223,31 @@ const useStyles = makeStyles((theme) => ({
             {" "}
             <Button variant="contained" color="primary" className={classes.navButton}>Home</Button>{" "}
           </Link>
-          <Link to="/courses">
-            {" "}
-            <Button variant="contained" color="primary" className={classes.navButton}>Browse Courses</Button>{" "}
+        
+
+          { isAuthenticated ? 
+          
+          (<>
+            <Link to="/"  onClick={handleLogout}>
+          {" "}
+          <Button variant="contained" color="primary" className={classes.navButton}>Login</Button>{" "}
           </Link>
+          </>
+                    ) : (
+                        <>
           <Link to="/login">
-            {" "}
-            <Button variant="contained" color="primary" className={classes.navButton}>Login</Button>{" "}
+          {" "}
+          <Button variant="contained" color="primary" className={classes.navButton}>Login</Button>{" "}
           </Link>
+
           <Link to="/signup">
-            {" "}
-            <Button variant="contained" color="primary" className={classes.navButton}>Sign up</Button>
+          {" "}
+          <Button variant="contained" color="primary" className={classes.navButton}>Sign up</Button>
           </Link>
-          <Button
-             variant="contained"
-              color="primary"
-               className={classes.navButton}
-               onClick={logoutUser}
-               >
-              Logout</Button>
+          </>
+              )  }
+
+         
            
           </div>
           <div className={classes.sectionMobile}>
@@ -251,4 +269,8 @@ const useStyles = makeStyles((theme) => ({
       </Container>
   );
 }
-export default connect(null,{logoutUser})(NavBar )
+
+const mapStateToProps = ({currentUser}) => {
+  return { currentUser }
+}
+export default connect(mapStateToProps,{logout})(NavBar )

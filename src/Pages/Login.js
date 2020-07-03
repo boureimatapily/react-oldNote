@@ -2,9 +2,11 @@ import React from "react";
 import { withStyles } from "@material-ui/styles";
 import Paper from "@material-ui/core/Paper";
 import { TextField, Button, Typography, Grid, Container } from "@material-ui/core";
-import { Link, Redirect } from "react-router-dom";
-import {loginUser} from "../redux/Actions/authActions"
+import { Link } from "react-router-dom";
+import {register, login} from "../redux/Actions/authActions"
 import { connect } from "react-redux";
+import {toast} from "react-toastify"
+
 
 // import FacebookIcon from "@material-ui/icons/Facebook";
 // import TwitterIcon from "@material-ui/icons/Twitter";
@@ -42,16 +44,20 @@ class Login extends React.Component {
       [e.target.name]:e.target.value
     })
   }
-  onLogin = ()=>{
-    
-  this.props.history.push('/');
-}
+
   handleSubmit = (e) => {
     e.preventDefault();
-    const { dispatch } = this.props;
     const { email, password } = this.state;
 
-    this.props.loginUser(email, password,this.onLogin);
+    this.props.login(email, password)
+    .then(() => {
+      toast.success("Login successful")
+      this.props.history.push("/")
+    })
+    .catch(error => {
+      toast.error("Login failed")
+      console.error(error)
+    })
   };
 
     
@@ -151,12 +157,5 @@ class Login extends React.Component {
 }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    isLoggingIn: state.auth.isLoggingIn,
-    loginError: state.auth.loginError,
-    isAuthenticated: state.auth.isAuthenticated
-  };
-}
 
-export default  withStyles(styles)(connect(mapStateToProps,{loginUser})(Login))
+export default  withStyles(styles)(connect(null,{login})(Login))

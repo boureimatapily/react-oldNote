@@ -1,28 +1,23 @@
-import React from "react";
-import { Route, Redirect } from "react-router-dom";
+import React from "react"
+import { getAuthenticationStatus } from "../Config/fbconfig"
+import { Route, Redirect } from "react-router-dom"
 
-const AppRoute = ({
-    component: Component,
-    isAuthenticated,
-    isVerifying,
-    ...rest
-  }) => (
+const AppRoute= ({ component: Component, ...rest }) => {
+  return (
     <Route
       {...rest}
       render={props =>
-        isVerifying ? (
-          <div />
-        ) : isAuthenticated ? (
+        getAuthenticationStatus() ? (
           <Component {...props} />
         ) : (
           <Redirect
             to={{
-              pathname: "/login",
-              state: { from: props.location }
+              pathname: "/",
             }}
           />
         )
       }
     />
-  );
-  export default AppRoute;
+  )
+}
+export default AppRoute

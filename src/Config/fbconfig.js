@@ -18,4 +18,10 @@ var firebaseConfig = {
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
   const storage = firebase.storage();
-  export { storage, firebase as default };
+  const auth = firebase.auth()
+  // So we can use local storage for initial UI purposes
+const getAuthenticationStatus = () => {
+  return localStorage.getItem("isAuthenticated")
+}
+
+  export { auth, storage, getAuthenticationStatus, firebase as default };

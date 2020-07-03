@@ -3,6 +3,11 @@ import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import { TextField, Button, Typography, Grid, Container } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import {register} from "../redux/Actions/authActions"
+import { connect } from "react-redux";
+import { toast } from "react-toastify"
+import { withStyles } from "@material-ui/styles";
+
 // import {
 //     MuiPickersUtilsProvider,
 //     KeyboardDatePicker
@@ -21,7 +26,7 @@ import { Link } from "react-router-dom";
   import FormLabel from "@material-ui/core/FormLabel";
 
 
-const useStyles = makeStyles((theme) => ({
+const styles ={
   root:{
     display:"flex",
   },
@@ -40,11 +45,41 @@ btnotheraccounts:{
     marginRight:10
 }
  
-}));
+};
 
-export default function Login() {
-  const classes = useStyles();
+class Signup extends React.Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      email:"",
+      password:""
+    };
+  }
 
+  handleChange = (e) =>{
+    this.setState({
+      [e.target.name]:e.target.value
+    })
+  }
+
+  
+  handleSubmit = (e) => {
+    e.preventDefault();
+    const { email, password } = this.state;
+
+    this.props.register(email, password)
+    .then(() => {
+      toast.success("Register successful")
+      this.props.history.push("/")
+    })
+    .catch(error => {
+      toast.error("Signup failed")
+      console.error(error)
+    })
+  };
+
+  render(){
+    const { classes } = this.props;
   return (
     <Container fixed className={classes.root}>
       <Grid container> 
@@ -53,7 +88,7 @@ export default function Login() {
     <div>
       <Paper className={classes.loginSection}>
         <h1>Get Started for Free</h1>
-        <form autoComplete={"false"} className={classes.formSection}>
+        <form autoComplete={"false"} className={classes.formSection}onSubmit={this.handleSubmit}>
             <TextField
               id="standard-basic"
               label="Email Address"
@@ -80,7 +115,7 @@ export default function Login() {
                 //   error={errors.password ? true : false}
                 />
               </div>
-              <div className={classes.Column}>
+              {/* <div className={classes.Column}>
                 <TextField
                   id="confirmPassword"
                   type="password"
@@ -92,10 +127,10 @@ export default function Login() {
                 //   value={values.confirmPassword}
                 //   onChange={handleChange}
                 />
-              </div>
+              </div> */}
             </div>
             <div className={classes.TwoColumns}>
-              <div className={classes.Column}>
+              {/* <div className={classes.Column}>
                 <TextField
                   id=" fullname"
                   label="fullname"
@@ -108,7 +143,7 @@ export default function Login() {
                 //   value={values.firstname}
                 //   onChange={handleChange}
                 />
-              </div>
+              </div> */}
               {/* <div className={classes.Column}>
                 <TextField
                   id="lastname"
@@ -125,7 +160,7 @@ export default function Login() {
               </div> */}
             </div>
             <div className={classes.TwoColumns}>
-              <div className={classes.Column}>
+              {/* <div className={classes.Column}>
                 <TextField
                   id="handle"
                   label="Username"
@@ -137,7 +172,7 @@ export default function Login() {
                 //   value={values.handle}
                 //   onChange={handleChange}
                 />
-              </div>
+              </div> */}
               {/* <div className={classes.Column}>
                 <MuiPickersUtilsProvider >
                   <Grid container justify="space-around">
@@ -260,3 +295,6 @@ export default function Login() {
     </Container>
   );
 }
+}
+
+export default  withStyles(styles)(connect(null,{register})(Signup))

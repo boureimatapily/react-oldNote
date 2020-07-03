@@ -2,9 +2,9 @@ import firebaseApp from "firebase/app";
 import firebase from "../Config/fbconfig";
 import { createStore, applyMiddleware, compose } from "redux";
 import reduxThunk from "redux-thunk";
-import { verifyAuth } from "./Actions/authActions";
+
 import rootReducer from "./Reducers/rootReducer";
-import { firestoreReducer, reduxFirestore } from "redux-firestore";
+import { reduxFirestore } from "redux-firestore";
 
 
 
@@ -16,7 +16,6 @@ export default function store(persistedState) {
       persistedState,
       compose(...middleware, reduxFirestore(firebaseApp, firebase))
     );
-    store.dispatch(verifyAuth());
     return store;
   }
 

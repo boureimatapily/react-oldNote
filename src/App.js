@@ -1,17 +1,24 @@
-import React, { Component } from "react";
+import React, { Component, useLayoutEffect } from "react";
 import Home from "./Pages/Home";
 import Signup from "./Pages/Signup";
 import Login from "./Pages/Login";
-import Courses from "./Pages/Courses";
 import { Switch, Route } from "react-router-dom";
 import NavBar from "./Components/NavBar";
-import Investment from "./Pages/Investment";
-import Donation from "./Pages/Donation";
+
+
+import { fetchUser } from "./redux/Actions/authActions"
+// import { connect } from "react-redux";
+// import AppRoute from "./util/AppRoute";
+import { ToastContainer } from "react-toastify"
 import { connect } from "react-redux";
-import AppRoute from "./util/AppRoute";
+import Chat from "./Pages/Chat";
 
-class App extends Component {
 
+
+function App({ fetchUser }){
+  useLayoutEffect(() => {
+    fetchUser()
+  }, [])
 
 // // Management authentification user first loading
 // componentDidMount() {
@@ -25,39 +32,27 @@ class App extends Component {
 //   }
 // }
 
-
-
-
-  render() {
     return (
       <React.Fragment>
         <NavBar />
         <Switch>
-          <AppRoute
+          <Route
             exact
             path="/"
             component={Home}
-            isAuthenticated={this.props.isAuthenticated}
-            isVerifying={this.props.isVerifying}
+           
           />
-         
+         <Route exact path="/chat" component={Chat} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/signup" component={Signup} />
-          <Route exact path="/courses" component={Courses} />
-          <Route exact path="/donation" component={Donation} />
-          <Route exact path="/investment" component={Investment} />
+         
         </Switch>
+        <ToastContainer autoClose={3000} hideProgressBar />
       </React.Fragment>
     );
   }
-}
 
-const mapStateToProps = (state) => {
-  return {
-    isAuthenticated: state.auth.isAuthenticated,
-    isVerifying: state.auth.isVerifying,
-  };
-};
+
 
 // const mapDispatchToProps = dispatch => {
 //   return {
@@ -66,4 +61,7 @@ const mapStateToProps = (state) => {
 //   };
 // };
 
-export default connect(mapStateToProps)(App);
+export default connect(
+  null,
+  { fetchUser }
+)(App)
