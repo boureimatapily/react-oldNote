@@ -15,7 +15,7 @@ class RoomList extends React.Component{
     return(
         <Container fixed> 
             <Grid container className={classes.root}>
-                 
+                 <h1> RoomList</h1>
              </Grid>
                
         </Container>
