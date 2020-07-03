@@ -15,7 +15,7 @@ class SendMessageForm extends React.Component{
     return(
         <Container fixed> 
             <Grid container className={classes.root}>
-                 
+                 <h1> Send Message form</h1>
              </Grid>
                
         </Container>
