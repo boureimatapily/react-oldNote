@@ -15,7 +15,7 @@ import Chat from "./Pages/Chat";
 
 
 
-function App({ fetchUser }){
+function App(){
   
 
 // // Management authentification user first loading
@@ -33,7 +33,7 @@ function App({ fetchUser }){
     return (
       <React.Fragment>
         <NavBar />
-        <Switch>
+        {/* <Switch>
           <Route
             exact
             path="/"
@@ -44,7 +44,7 @@ function App({ fetchUser }){
           <Route exact path="/login" component={Login} />
           <Route exact path="/signup" component={Signup} />
          
-        </Switch>
+        </Switch> */}
         <ToastContainer autoClose={3000} hideProgressBar />
       </React.Fragment>
     );
