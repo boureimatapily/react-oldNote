@@ -7,14 +7,14 @@ import "firebase/storage";
 import "firebase/analytics";
 
 var firebaseConfig = {
-    apiKey: "AIzaSyDslZ8t4_O0C71bMKmvK-5dT4gxJBTxjEU",
-    authDomain: "learnforward-b8e93.firebaseapp.com",
-    databaseURL: "https://learnforward-b8e93.firebaseio.com",
-    projectId: "learnforward-b8e93",
-    storageBucket: "learnforward-b8e93.appspot.com",
-    messagingSenderId: "110471968321",
-    appId: "1:110471968321:web:6cacc25abd91228ffc38c0"
-  };
+  apiKey: "AIzaSyC9fDtf1TkDZ-GPJNcGeMrJTclRiA_6F7Y",
+  authDomain: "user-notes-ed731.firebaseapp.com",
+  databaseURL: "https://user-notes-ed731.firebaseio.com",
+  projectId: "user-notes-ed731",
+  storageBucket: "user-notes-ed731.appspot.com",
+  messagingSenderId: "260299530022",
+  appId: "1:260299530022:web:fdbfadae1d8dd950c2ebe7"
+};
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
   const storage = firebase.storage();
