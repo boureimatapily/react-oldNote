@@ -7,3 +7,7 @@ export const LOGOUT_FAILURE = "LOGOUT_FAILURE";
 export const VERIFY_REQUEST = "VERIFY_REQUEST";
 export const VERIFY_SUCCESS = "VERIFY_SUCCESS";
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
+
+
+//notes
+export const GET_NOTES = "GET_NOTES";
